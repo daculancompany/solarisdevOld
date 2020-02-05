@@ -1,11 +1,27 @@
 const express = require('express');
 
 const app = express();
+const PORT = process.env.port || 3001;
 
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+
+
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
+
+// Send every other request to the React app
+// Define any API routes before this runs
+//res.sendFile(path.join(__dirname, "./client/build/index.html"));
+//res.sendFile(path.join(__dirname, "./html/index.html"));
+app.get("*", (req, res) => {
+   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 app.post('/api/createContact', (req, res) => {
     const nodemailer = require('nodemailer');
@@ -27,7 +43,6 @@ app.post('/api/createContact', (req, res) => {
 });
 
 
-//const port = 3001;
-const port =  process.env.PORT ||  3001;
+
 
 app.listen(port, () => `Server running on port ${port}`);
