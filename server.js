@@ -27,6 +27,7 @@ app.post('/api/createContact', (req, res) => {
 });
 
 
-const port = 3001;
+//const port = 3001;
+const port =  process.env.PORT ||  3001;
 
 app.listen(port, () => `Server running on port ${port}`);
