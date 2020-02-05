@@ -23,6 +23,10 @@ app.get("*", (req, res) => {
    res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
+app.get('/api/test', (req, res) => {
+     res.json("test data");
+}); 
+
 app.post('/api/createContact', (req, res) => {
     const nodemailer = require('nodemailer');
     const sgMail = require('@sendgrid/mail');
